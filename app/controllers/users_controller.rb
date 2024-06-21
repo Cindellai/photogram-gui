@@ -17,4 +17,25 @@ class UsersController < ActionController::Base
 
     render({ :template => "user_templates/show"})
 end
+
+  def create
+    input_username = params.fetch("query_username")
+
+    new_user = User.new
+    new_user.username = input_username
+    new_user.save
+
+    redirect_to("/users/#{new_user.username}")
+  end
+
+  def update
+    user_id = params.fetch("id")
+    updated_username = params.fetch("query_username")
+
+    user = User.find(user_id)
+    user.username = updated_username
+    user.save
+
+    redirect_to("/users/#{user.username}")
+  end
 end 
